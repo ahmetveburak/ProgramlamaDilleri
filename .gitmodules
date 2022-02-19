@@ -1,0 +1,6 @@
+[submodule "ProgramlamaDilleri_Bot"]
+	path = ProgramlamaDilleri_Bot
+	url = https://github.com/ahmetveburak/ProgramlamaDilleri_Bot.git
+[submodule "ProgramlamaDilleri_API"]
+	path = ProgramlamaDilleri_API
+	url = https://github.com/ahmetveburak/ProgramlamaDilleri_API.git
