@@ -1,0 +1,39 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    container_name: prodil_db
+    environment:
+      POSTGRES_USER: programlama
+      POSTGRES_PASSWORD: parola
+      POSTGRES_DB: prodil
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+    ports:
+      - '5432:5432'
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: prodil_api
+    working_dir: /code/ProgramlamaDilleri_API
+    command: python manage.py runserver 0:8000
+    entrypoint: /code/scripts/entrypoint.sh
+    volumes:
+      - .:/code
+    ports:
+      - '8000:8000'
+
+  bot:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: prodil_bot
+    working_dir: /code/ProgramlamaDilleri_Bot
+    command: python -m prodil
+    entrypoint: /code/scripts/telegram.sh
+    volumes:
+      - .:/code
+    depends_on:
+      - api
