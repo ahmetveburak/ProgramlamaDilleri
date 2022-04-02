@@ -5,7 +5,7 @@ services:
     container_name: prodil_db
     environment:
       POSTGRES_USER: programlama
-      POSTGRES_PASSWORD: parola
+      POSTGRES_PASSWORD: guclu_parola
       POSTGRES_DB: prodil
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
@@ -24,6 +24,8 @@ services:
       - .:/code
     ports:
       - '8000:8000'
+    depends_on:
+      - db
 
   bot:
     build:
@@ -31,7 +33,7 @@ services:
       dockerfile: ./Dockerfile
     container_name: prodil_bot
     working_dir: /code/ProgramlamaDilleri_Bot
-    command: python -m prodil
+    command: python -m probot
     entrypoint: /code/scripts/telegram.sh
     volumes:
       - .:/code
