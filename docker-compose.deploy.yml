@@ -1,0 +1,41 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    container_name: prodil_db
+    environment:
+      POSTGRES_USER: programlama
+      POSTGRES_PASSWORD: guclu_parola
+      POSTGRES_DB: prodil
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+    ports:
+      - '5432:5432'
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: prodil_api
+    working_dir: /code/ProgramlamaDilleri_API
+    command: gunicorn prodil.wsgi:application --bind 0.0.0.0:8000
+    entrypoint: /code/scripts/entrypoint.sh
+    volumes:
+      - .:/code
+    expose:
+      - 8000
+    depends_on:
+      - db
+
+  bot:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: prodil_bot
+    working_dir: /code/ProgramlamaDilleri_Bot
+    command: python -m probot
+    entrypoint: /code/scripts/telegram.sh
+    volumes:
+      - .:/code
+    depends_on:
+      - api
