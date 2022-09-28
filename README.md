@@ -19,5 +19,5 @@ cp prodil.ini.sample prodil.ini
 
 Build and Run
 ```shell
-docker-compose -f docker-compore.dev.yml up -d --build
+docker-compose -f docker-compose.dev.yml up -d --build
 ```
